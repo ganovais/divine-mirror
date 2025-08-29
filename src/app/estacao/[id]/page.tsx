@@ -38,9 +38,6 @@ export default function StationPage({ params }: PageProps) {
 
   return (
   <main className="min-h-dvh mx-auto max-w-4xl px-4 sm:px-6 py-10 md:py-16">
-      <div className="inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-medium text-slate-600 bg-slate-100/90 ring-1 ring-slate-200/80 mb-3">
-        Célula Santa Rita de Cássia
-      </div>
       <motion.h1
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
