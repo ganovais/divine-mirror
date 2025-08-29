@@ -1,10 +1,12 @@
 "use client";
+
 import Link from "next/link";
-import { stations } from "@/lib/data";
 import { motion } from "framer-motion";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { createElement, type ComponentType } from "react";
 import * as Icons from "lucide-react";
+
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { stations } from "@/lib/data";
 
 export default function Home() {
   return (
