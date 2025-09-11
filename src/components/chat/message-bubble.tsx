@@ -44,8 +44,8 @@ export function MessageBubble({ message }: MessageBubbleProps) {
     >
       {/* Avatar - only for assistant */}
       {!isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-          <Bot className="w-4 h-4 text-blue-600" />
+        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-red-50 flex items-center justify-center">
+          <Bot className="w-4 h-4 text-[#8e0000]" />
         </div>
       )}
 
@@ -54,7 +54,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         <div
           className={`px-4 py-3 rounded-2xl ${
             isUser
-              ? "bg-blue-600 text-white rounded-br-md"
+              ? "bg-[#8e0000] text-white rounded-br-md shadow-sm"
               : "bg-white border border-slate-200 rounded-bl-md shadow-sm"
           }`}
         >
@@ -88,7 +88,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
       {/* Avatar - only for user */}
       {isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
+        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
           <User className="w-4 h-4 text-slate-600" />
         </div>
       )}

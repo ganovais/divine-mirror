@@ -1,28 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Bot } from "lucide-react";
 import { Chat } from "@/components/chat";
 import { Button } from "@/components/ui/button";
 
 export default function ChatPage() {
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-slate-50">
+    <div className="h-screen flex flex-col">
       {/* Navigation Header */}
-      <div className="flex items-center justify-between p-4 border-b border-slate-200 bg-white/80 backdrop-blur-sm">
+      <div className="flex items-center justify-between p-4 border-b border-slate-200">
         <Link href="/">
-          <Button variant="ghost" className="flex items-center gap-2 text-slate-600 hover:text-slate-900">
-            <ArrowLeft className="w-4 h-4" />
-            Voltar
+          <Button
+            variant="ghost"
+            className="flex items-center gap-2 text-slate-600 hover:text-[#8e0000] transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-medium">Voltar</span>
           </Button>
         </Link>
-        
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-          <span className="text-sm text-slate-600">Online</span>
+
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-full bg-red-50">
+            <Bot className="w-5 h-5 text-[#8e0000]" />
+          </div>
+          <div>
+            <h2 className="font-semibold text-slate-900">Espelho Divino</h2>
+            <p className="text-sm text-slate-600">Seu guia espiritual</p>
+          </div>
         </div>
       </div>
-      
+
       {/* Chat Component */}
       <div className="flex-1 flex flex-col">
         <Chat />

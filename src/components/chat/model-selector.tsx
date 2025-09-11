@@ -26,22 +26,22 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
   const getModelIcon = (provider: string) => {
     switch (provider) {
       case "openai":
-        return <Bot className="w-4 h-4 text-green-600" />;
+        return <Bot className="w-4 h-4 text-[#8e0000]" />;
       case "google":
-        return <Sparkles className="w-4 h-4 text-blue-600" />;
+        return <Sparkles className="w-4 h-4 text-[#8e0000]" />;
       default:
-        return <Bot className="w-4 h-4 text-slate-600" />;
+        return <Bot className="w-4 h-4 text-[#8e0000]" />;
     }
   };
 
   const getProviderColor = (provider: string) => {
     switch (provider) {
       case "openai":
-        return "text-green-600 bg-green-50 border-green-200";
+        return "text-[#8e0000] bg-red-50 border-red-200";
       case "google":
-        return "text-blue-600 bg-blue-50 border-blue-200";
+        return "text-[#8e0000] bg-red-50 border-red-200";
       default:
-        return "text-slate-600 bg-slate-50 border-slate-200";
+        return "text-[#8e0000] bg-red-50 border-red-200";
     }
   };
 
@@ -106,8 +106,8 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
                       onModelChange(model.id);
                       setIsOpen(false);
                     }}
-                    className={`w-full flex items-start gap-3 p-3 rounded-lg transition-colors hover:bg-slate-50 ${
-                      selectedModel === model.id ? "bg-blue-50 border border-blue-200" : ""
+                    className={`w-full flex items-start gap-3 p-3 rounded-lg transition-colors hover:bg-red-50 ${
+                      selectedModel === model.id ? "bg-red-50 border border-red-200" : ""
                     }`}
                   >
                     <div className="flex-shrink-0 mt-0.5">
@@ -123,15 +123,15 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
                       </div>
                       <div className={`inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-medium ${
                         model.provider === "openai" 
-                          ? "bg-green-100 text-green-700" 
-                          : "bg-blue-100 text-blue-700"
+                          ? "bg-red-100 text-[#8e0000]" 
+                          : "bg-red-100 text-[#8e0000]"
                       }`}>
                         {model.provider === "openai" ? "OpenAI" : "Google"}
                       </div>
                     </div>
                     
                     {selectedModel === model.id && (
-                      <div className="flex-shrink-0 w-2 h-2 bg-blue-600 rounded-full mt-2" />
+                      <div className="flex-shrink-0 w-2 h-2 bg-[#8e0000] rounded-full mt-2" />
                     )}
                   </button>
                 ))}

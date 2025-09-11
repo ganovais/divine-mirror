@@ -17,7 +17,7 @@ import { stations } from "@/lib/data";
 
 export default function Home() {
   return (
-    <main className="relative min-h-dvh mx-auto max-w-4xl px-4 sm:px-6 py-10 md:py-16">
+    <main className="relative">
       <motion.div
         initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
