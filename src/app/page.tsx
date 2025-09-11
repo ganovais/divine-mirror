@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { createElement, type ComponentType } from "react";
 import * as Icons from "lucide-react";
-import Image from "next/image";
+import { MessageCircle, Sparkles } from "lucide-react";
 
 import {
   Card,
@@ -12,8 +12,8 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { stations } from "@/lib/data";
-import LogoSantaRita from "@/assets/logo-santa-rita.png";
 
 export default function Home() {
   return (
@@ -29,8 +29,24 @@ export default function Home() {
         </h1>
         <p className="mt-3 text-slate-600 max-w-2xl mx-auto text-balance px-2">
           Explore estações temáticas e descubra versículos que falam ao seu
-          momento. Clique em uma estação para refletir.
+          momento. Clique em uma estação para refletir ou converse diretamente com o Espelho Divino.
         </p>
+        
+        {/* Chat CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+          className="mt-6"
+        >
+          <Link href="/chat">
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 group">
+              <MessageCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+              Conversar com o Espelho Divino
+              <Sparkles className="w-4 h-4 ml-2 opacity-70" />
+            </Button>
+          </Link>
+        </motion.div>
       </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
