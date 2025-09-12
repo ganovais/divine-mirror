@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen w-full bg-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
       >
         {/* Animated gradient background layer */}
         <div className="min-h-dvh mx-auto max-w-5xl px-4 sm:px-6 py-10 md:py-16">

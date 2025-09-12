@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Send,
   Bot,
   Loader2,
   Plus,
@@ -11,6 +10,7 @@ import {
   Lightbulb,
   Heart,
   BookOpen,
+  ArrowUp,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -33,20 +33,11 @@ export function Chat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // This effect runs whenever the 'input' state changes
-  const [isMultiline, setIsMultiline] = useState(false);
-
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
-      // Temporarily reset height to auto to calculate the actual scroll height
       textarea.style.height = "auto";
-      // Set the height to the scroll height to fit the content
       textarea.style.height = `${textarea.scrollHeight}px`;
-
-      // Check if content is multiline (more than single line height)
-      const singleLineHeight = 56; // approximate single line height in pixels
-      setIsMultiline(textarea.scrollHeight > singleLineHeight * 1.5);
     }
   }, [input]);
 
@@ -174,7 +165,6 @@ export function Chat() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto">
         <AnimatePresence>
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center p-6">
@@ -234,7 +224,7 @@ export function Chat() {
               </motion.div>
             </div>
           ) : (
-            <div className="p-4 space-y-4">
+            <div className="p-4 pb-6 space-y-4">
               {messages.map((message) => (
                 <MessageBubble key={message.id} message={message} />
               ))}
@@ -260,73 +250,41 @@ export function Chat() {
             </div>
           )}
         </AnimatePresence>
-      </div>
 
-      {/* Input - Fixed at bottom when there are messages */}
-      <div
-        className={`p-4 ${
-          messages.length > 0 ? "fixed bottom-0 left-0 right-0" : ""
-        }`}
-      >
-        <div className="w-full shadow-md rounded-xl relative bg-white overflow-hidden">
-          <div
-            className={`${
-              isMultiline
-                ? "relative px-7 pt-7 shadow-sm-inset-bottom"
-                : "p-4 flex justify-between items-center"
-            }`}
-          >
-            <textarea
-              rows={1}
-              ref={textareaRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyPress}
-              placeholder="Digite sua pergunta espiritual..."
-              className={`w-full max-h-[270px] overflow-y-auto resize-none outline-none bg-white transition-all duration-200`}
-              disabled={isLoading || !selectedModel}
-            />
-            {!isMultiline && (
-              <Button
-                onClick={handleSendMessage}
-                disabled={!input.trim() || isLoading || !selectedModel}
-                className="h-10 w-10 bg-[#8e0000] hover:bg-[#a50000] text-white rounded-full transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
-              >
-                {isLoading ? (
-                  <Loader2 size={20} className="animate-spin" />
-                ) : (
-                  <Send strokeWidth={1.5} className="size-4" />
-                )}
-              </Button>
-            )}
+        <div
+          className={`w-full sticky border p-3 pt-5 rounded-3xl bg-white ${
+            messages.length ? "bottom-8 z-50 shadow-[0_40px_0_#fff]" : "relative"
+          }`}
+        >
+          <textarea
+            ref={textareaRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyPress}
+            placeholder="Digite sua pergunta espiritual..."
+            className="p-2 w-full max-h-[120px] overflow-y-auto resize-none outline-none bg-white transition-all duration-200"
+            disabled={isLoading || !selectedModel}
+          />
+
+          <div className="flex justify-end">
+            <Button
+              onClick={handleSendMessage}
+              disabled={!input.trim() || isLoading || !selectedModel}
+              className="h-10 w-10 bg-[#8e0000] hover:bg-[#a50000] text-white rounded-full transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center relative z-10"
+            >
+              {isLoading ? (
+                <Loader2 strokeWidth={1.5} className="size-5 animate-spin" />
+              ) : (
+                <ArrowUp strokeWidth={2.5} className="size-5" />
+              )}
+            </Button>
           </div>
-
-          {/* Send button - at bottom with shadow when multiline */}
-          {isMultiline && (
-            <div className="z-10 flex justify-end p-2 ">
-              <Button
-                onClick={handleSendMessage}
-                disabled={!input.trim() || isLoading || !selectedModel}
-                className="h-10 w-10 bg-[#8e0000] hover:bg-[#a50000] text-white rounded-full transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center relative z-10"
-              >
-                {isLoading ? (
-                  <Loader2 size={20} className="animate-spin" />
-                ) : (
-                  <Send strokeWidth={1.5} className="size-4" />
-                )}
-              </Button>
-            </div>
-          )}
         </div>
         {!selectedModel && availableModels.length === 0 && (
           <p className="text-sm text-[#8e0000] mt-2 text-center">
             Nenhum modelo de IA está disponível. Verifique suas chaves de API.
           </p>
         )}
-      </div>
-
-      {/* Spacer when input is fixed */}
-      {messages.length > 0 && <div className="h-20" />}
     </div>
   );
 }

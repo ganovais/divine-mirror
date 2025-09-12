@@ -42,33 +42,29 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       animate={{ opacity: 1, y: 0 }}
       className={`flex gap-3 ${isUser ? "justify-end" : "justify-start"}`}
     >
-      {/* Avatar - only for assistant */}
-      {!isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-red-50 flex items-center justify-center">
-          <Bot className="w-4 h-4 text-[#8e0000]" />
-        </div>
-      )}
-
-      {/* Message Content */}
-      <div className={`max-w-[70%] ${isUser ? "order-first" : ""}`}>
+      <div className={`${isUser ? "order-first" : ""}`}>
         <div
-          className={`px-4 py-3 rounded-2xl ${
+          className={`rounded-2xl ${
             isUser
-              ? "bg-[#8e0000] text-white rounded-br-md shadow-sm"
-              : "bg-white border border-slate-200 rounded-bl-md shadow-sm"
+              ? "px-4 py-3 bg-[#8e0000] text-white rounded-br-md shadow-sm"
+              : "py-3"
           }`}
         >
-          <div className="text-sm leading-relaxed whitespace-pre-wrap">
+          <div className="leading-relaxed whitespace-pre-wrap">
             {message.content}
           </div>
         </div>
 
         {/* Message Info */}
-        <div className={`flex items-center gap-2 mt-1 px-1 ${isUser ? "justify-end" : "justify-start"}`}>
+        <div
+          className={`flex items-center gap-2 mt-1 px-1 ${
+            isUser ? "justify-end" : "justify-start"
+          }`}
+        >
           <span className="text-xs text-slate-500">
             {formatTime(message.timestamp)}
           </span>
-          
+
           {/* Copy button for assistant messages */}
           {!isUser && (
             <button
@@ -85,13 +81,6 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           )}
         </div>
       </div>
-
-      {/* Avatar - only for user */}
-      {isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
-          <User className="w-4 h-4 text-slate-600" />
-        </div>
-      )}
     </motion.div>
   );
 }

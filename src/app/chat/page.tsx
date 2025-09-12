@@ -7,8 +7,7 @@ import { Button } from "@/components/ui/button";
 
 export default function ChatPage() {
   return (
-    <div className="h-screen flex flex-col">
-      {/* Navigation Header */}
+    <>
       <div className="flex items-center justify-between p-4 border-b border-slate-200">
         <Link href="/">
           <Button
@@ -31,10 +30,7 @@ export default function ChatPage() {
         </div>
       </div>
 
-      {/* Chat Component */}
-      <div className="flex-1 flex flex-col">
-        <Chat />
-      </div>
-    </div>
+      <Chat />
+    </>
   );
 }
