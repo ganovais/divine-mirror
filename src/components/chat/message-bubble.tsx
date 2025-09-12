@@ -42,28 +42,28 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       animate={{ opacity: 1, y: 0 }}
       className={`group flex gap-3 ${
         isUser ? "justify-end" : "justify-start"
-      } mb-4`}
+      } mb-6 px-1`}
     >
       <div
         className={`flex flex-col ${
           isUser ? "items-end" : "items-start"
-        } max-w-[80%] sm:max-w-[70%]`}
+        } max-w-[85%] sm:max-w-[75%] md:max-w-[70%]`}
       >
         <div
           className={`rounded-2xl ${
             isUser
               ? "px-4 py-3 bg-[#8e0000] text-white rounded-br-md shadow-sm"
-              : ""
+              : "px-4 py-3 bg-slate-50 text-slate-900 rounded-bl-md shadow-sm border border-slate-200"
           }`}
         >
-          <div className="leading-relaxed whitespace-pre-wrap">
+          <div className="leading-relaxed whitespace-pre-wrap text-sm sm:text-base">
             {message.content}
           </div>
         </div>
 
         {/* Message Info */}
         <div
-          className={`flex items-center gap-2 mt-1 px-2 ${
+          className={`flex items-center gap-2 mt-2 px-2 ${
             isUser ? "justify-end" : "justify-start"
           }`}
         >
@@ -75,13 +75,13 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           {!isUser && (
             <button
               onClick={copyToClipboard}
-              className="p-2 rounded hover:bg-slate-100"
+              className="p-1.5 rounded-md hover:bg-slate-100 transition-colors opacity-0 group-hover:opacity-100"
               title="Copiar mensagem"
             >
               {copied ? (
-                <Check className="size-5 text-green-600" />
+                <Check className="size-3.5 text-green-600" />
               ) : (
-                <Copy className="size-5 text-slate-500" />
+                <Copy className="size-3.5 text-slate-500" />
               )}
             </button>
           )}
