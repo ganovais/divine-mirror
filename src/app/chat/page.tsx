@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 
 export default function ChatPage() {
   return (
-    <>
-      <div className="flex items-center justify-between p-4 border-b border-slate-200">
+    <div className="flex flex-col h-screen">
+      <div className="flex items-center justify-between p-4 border-b border-slate-200 bg-white relative z-20">
         <Link href="/">
           <Button
             variant="ghost"
@@ -30,7 +30,9 @@ export default function ChatPage() {
         </div>
       </div>
 
-      <Chat />
-    </>
+      <div className="flex-1 overflow-hidden">
+        <Chat />
+      </div>
+    </div>
   );
 }

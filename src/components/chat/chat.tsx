@@ -144,9 +144,9 @@ export function Chat() {
   };
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="relative flex flex-col h-full w-full">
       {/* Header */}
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-4 bg-white border-b border-slate-200 relative z-10">
         <ModelSelector
           selectedModel={selectedModel}
           onModelChange={setSelectedModel}
@@ -164,10 +164,11 @@ export function Chat() {
         </Button>
       </div>
 
-      {/* Messages */}
+      {/* Messages Container */}
+      <div className="flex-1 overflow-y-auto pb-36 sm:pb-40">
         <AnimatePresence>
           {messages.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center p-6">
+            <div className="min-h-[calc(100vh-200px)] flex flex-col items-center justify-center p-6">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -224,7 +225,7 @@ export function Chat() {
               </motion.div>
             </div>
           ) : (
-            <div className="p-4 pb-6 space-y-4">
+            <div className="p-4">
               {messages.map((message) => (
                 <MessageBubble key={message.id} message={message} />
               ))}
@@ -250,41 +251,44 @@ export function Chat() {
             </div>
           )}
         </AnimatePresence>
+      </div>
 
-        <div
-          className={`w-full sticky border p-3 pt-5 rounded-3xl bg-white ${
-            messages.length ? "bottom-8 z-50 shadow-[0_40px_0_#fff]" : "relative"
-          }`}
-        >
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyPress}
-            placeholder="Digite sua pergunta espiritual..."
-            className="p-2 w-full max-h-[120px] overflow-y-auto resize-none outline-none bg-white transition-all duration-200"
-            disabled={isLoading || !selectedModel}
-          />
+      {/* Fixed Input Area */}
+      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white to-transparent pt-6 pb-4 sm:pb-6 px-4 z-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-lg backdrop-blur-sm">
+            <textarea
+              ref={textareaRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Digite sua pergunta espiritual..."
+              className="p-2 w-full max-h-[100px] sm:max-h-[120px] overflow-y-auto resize-none outline-none bg-transparent transition-all duration-200 placeholder:text-slate-400 text-sm sm:text-base"
+              disabled={isLoading || !selectedModel}
+            />
 
-          <div className="flex justify-end">
-            <Button
-              onClick={handleSendMessage}
-              disabled={!input.trim() || isLoading || !selectedModel}
-              className="h-10 w-10 bg-[#8e0000] hover:bg-[#a50000] text-white rounded-full transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center relative z-10"
-            >
-              {isLoading ? (
-                <Loader2 strokeWidth={1.5} className="size-5 animate-spin" />
-              ) : (
-                <ArrowUp strokeWidth={2.5} className="size-5" />
-              )}
-            </Button>
+            <div className="flex justify-end mt-2">
+              <Button
+                onClick={handleSendMessage}
+                disabled={!input.trim() || isLoading || !selectedModel}
+                className="h-9 w-9 sm:h-10 sm:w-10 bg-[#8e0000] hover:bg-[#a50000] text-white rounded-full transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              >
+                {isLoading ? (
+                  <Loader2 strokeWidth={1.5} className="size-4 sm:size-5 animate-spin" />
+                ) : (
+                  <ArrowUp strokeWidth={2.5} className="size-4 sm:size-5" />
+                )}
+              </Button>
+            </div>
           </div>
+          
+          {!selectedModel && availableModels.length === 0 && (
+            <p className="text-xs sm:text-sm text-[#8e0000] mt-2 text-center">
+              Nenhum modelo de IA está disponível. Verifique suas chaves de API.
+            </p>
+          )}
         </div>
-        {!selectedModel && availableModels.length === 0 && (
-          <p className="text-sm text-[#8e0000] mt-2 text-center">
-            Nenhum modelo de IA está disponível. Verifique suas chaves de API.
-          </p>
-        )}
+      </div>
     </div>
   );
 }

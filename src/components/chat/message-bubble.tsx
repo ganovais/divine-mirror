@@ -40,24 +40,32 @@ export function MessageBubble({ message }: MessageBubbleProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`flex gap-3 ${isUser ? "justify-end" : "justify-start"}`}
+      className={`group flex gap-3 ${isUser ? "justify-end" : "justify-start"} mb-4`}
     >
-      <div className={`${isUser ? "order-first" : ""}`}>
+      {!isUser && (
+        <div className="flex-shrink-0">
+          <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center">
+            <Bot className="w-4 h-4 text-[#8e0000]" />
+          </div>
+        </div>
+      )}
+      
+      <div className={`flex flex-col ${isUser ? "items-end" : "items-start"} max-w-[80%] sm:max-w-[70%]`}>
         <div
           className={`rounded-2xl ${
             isUser
               ? "px-4 py-3 bg-[#8e0000] text-white rounded-br-md shadow-sm"
-              : "py-3"
+              : "px-4 py-3 bg-slate-50 text-slate-900 rounded-bl-md shadow-sm border"
           }`}
         >
-          <div className="leading-relaxed whitespace-pre-wrap">
+          <div className="leading-relaxed whitespace-pre-wrap text-sm">
             {message.content}
           </div>
         </div>
 
         {/* Message Info */}
         <div
-          className={`flex items-center gap-2 mt-1 px-1 ${
+          className={`flex items-center gap-2 mt-1 px-2 ${
             isUser ? "justify-end" : "justify-start"
           }`}
         >
@@ -81,6 +89,14 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           )}
         </div>
       </div>
+
+      {isUser && (
+        <div className="flex-shrink-0">
+          <div className="w-8 h-8 rounded-full bg-[#8e0000] flex items-center justify-center">
+            <User className="w-4 h-4 text-white" />
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 }
