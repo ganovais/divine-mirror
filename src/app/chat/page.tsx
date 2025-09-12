@@ -76,7 +76,7 @@ export default async function ChatPage() {
   return (
     <div className="flex flex-col h-screen">
       {/* Header with improved design */}
-      <div className="border-b border-slate-200/50 bg-gradient-to-r from-red-50 via-red-200 to-red-50 backdrop-blur-xl relative z-20">
+      <div className="border-b border-slate-200/50 bg-gradient-to-r from-red-50 via-red-50 to-red-50 backdrop-blur-xl relative z-20">
         <div
           aria-hidden
           className="absolute inset-x-0 top-0 flex justify-center pointer-events-none"
