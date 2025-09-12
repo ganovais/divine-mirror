@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { createElement, type ComponentType } from "react";
 import * as Icons from "lucide-react";
-import Image from "next/image";
+import { MessageCircle, Sparkles } from "lucide-react";
 
 import {
   Card,
@@ -12,67 +13,118 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { stations } from "@/lib/data";
 import LogoSantaRita from "@/assets/logo-santa-rita.png";
 
 export default function Home() {
   return (
-    <main className="relative min-h-dvh mx-auto max-w-4xl px-4 sm:px-6 py-10 md:py-16">
-      <motion.div
-        initial={{ opacity: 0, y: -12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="text-center mb-8 md:mb-12"
-      >
-        <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-slate-900">
-          O Espelho Divino
-        </h1>
-        <p className="mt-3 text-slate-600 max-w-2xl mx-auto text-balance px-2">
-          Explore estações temáticas e descubra versículos que falam ao seu
-          momento. Clique em uma estação para refletir.
-        </p>
-      </motion.div>
+    <>
+      {/* Animated gradient background layer */}
+      <div className="min-h-dvh mx-auto max-w-5xl px-4 sm:px-6 py-10 md:py-16">
+        <div
+          aria-hidden
+          className="fixed inset-0 -z-10 animate-gradient-slow"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 flex justify-center pointer-events-none"
+        >
+          <div
+            className="h-32 sm:h-48 w-[28rem] sm:w-[36rem] blur-3xl opacity-90"
+            style={{ background: "linear-gradient(90deg, #8e0000, #cd2323)" }}
+          />
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-        {stations.map((station, idx) => {
-          const iconName = (station.icon || "circle").toString();
-          const candidate =
-            (Icons as any)[iconName] ||
-            (Icons as any)[iconName[0].toUpperCase() + iconName.slice(1)] ||
-            (Icons as any)[
-              iconName.replace(/(^|[-_])(\w)/g, (_, __, c) => c.toUpperCase())
-            ] ||
-            (Icons as any)["Circle"];
-          const Icon = candidate as ComponentType<any> | undefined;
-          return (
+        <motion.div
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center"
+        >
+          {/* Logo */}
+          <Image
+            src={LogoSantaRita}
+            alt="Logo Santa Rita"
+            priority
+            className="mx-auto h-16 w-auto sm:h-20 drop-shadow-[0_8px_18px_rgba(205,35,35,0.25)]"
+          />
+        </motion.div>
+
+        <main className="relative">
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-center mb-8 md:mb-12"
+          >
+            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-slate-900">
+              O Espelho Divino
+            </h1>
+            <p className="mt-3 text-slate-600 max-w-2xl mx-auto text-balance px-2">
+              Explore estações temáticas e descubra versículos que falam ao seu
+              momento. Clique em uma estação para refletir ou converse diretamente com o Espelho Divino.
+            </p>
+            
+            {/* Chat CTA */}
             <motion.div
-              key={station.id}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+              className="mt-6"
             >
-              <Link href={`/estacao/${station.id}`} className="group block">
-                <Card className="bg-white/60 border-white/30 backdrop-blur-xl shadow-[0_8px_30px_rgba(2,6,23,.06)] transition-transform duration-200 group-hover:scale-[1.03] hover:shadow-[0_12px_40px_rgba(2,6,23,.10)]">
-                  <CardHeader className="flex flex-row items-center gap-3">
-                    {Icon &&
-                      createElement(Icon, {
-                        className: "size-5 text-slate-700",
-                      })}
-                    <div>
-                      <CardTitle className="text-slate-900 text-base sm:text-lg">
-                        {station.title}
-                      </CardTitle>
-                      <CardDescription className="text-slate-500">
-                        {station.verses.length} versículos
-                      </CardDescription>
-                    </div>
-                  </CardHeader>
-                </Card>
+              <Link href="/chat">
+                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 group">
+                  <MessageCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                  Conversar com o Espelho Divino
+                  <Sparkles className="w-4 h-4 ml-2 opacity-70" />
+                </Button>
               </Link>
             </motion.div>
-          );
-        })}
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {stations.map((station, idx) => {
+              const iconName = (station.icon || "circle").toString();
+              const candidate =
+                (Icons as any)[iconName] ||
+                (Icons as any)[iconName[0].toUpperCase() + iconName.slice(1)] ||
+                (Icons as any)[
+                  iconName.replace(/(^|[-_])(\w)/g, (_, __, c) => c.toUpperCase())
+                ] ||
+                (Icons as any)["Circle"];
+              const Icon = candidate as ComponentType<any> | undefined;
+              return (
+                <motion.div
+                  key={station.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.08 }}
+                >
+                  <Link href={`/estacao/${station.id}`} className="group block">
+                    <Card className="bg-white/60 border-white/30 backdrop-blur-xl shadow-[0_8px_30px_rgba(2,6,23,.06)] transition-transform duration-200 group-hover:scale-[1.03] hover:shadow-[0_12px_40px_rgba(2,6,23,.10)]">
+                      <CardHeader className="flex flex-row items-center gap-3">
+                        {Icon &&
+                          createElement(Icon, {
+                            className: "size-5 text-slate-700",
+                          })}
+                        <div>
+                          <CardTitle className="text-slate-900 text-base sm:text-lg">
+                            {station.title}
+                          </CardTitle>
+                          <CardDescription className="text-slate-500">
+                            {station.verses.length} versículos
+                          </CardDescription>
+                        </div>
+                      </CardHeader>
+                    </Card>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+        </main>
       </div>
-    </main>
+    </>
   );
 }
