@@ -109,7 +109,7 @@ export function ModelSelector({
       className="w-full sm:w-auto"
     >
       <Select value={selectedModel} onValueChange={onModelChange}>
-        <SelectTrigger className="w-full min-h-[60px] bg-white border-2 border-slate-300 rounded-xl shadow-lg hover:shadow-xl hover:border-[#8e0000]/40 transition-all duration-200 focus:ring-1 focus:ring-[#8e0000]/30 focus:border-[#8e0000]">
+        <SelectTrigger className="min-h-[50px] bg-white border-2 border-slate-300 rounded-xl shadow-lg hover:shadow-xl hover:border-[#8e0000]/40 transition-all duration-200 focus:ring-1 focus:ring-[#8e0000]/30 focus:border-[#8e0000]">
           <div className="flex items-center gap-2 sm:gap-3 w-full">
             {selectedModelData && (
               <div className="p-1.5 sm:p-2 bg-gradient-to-br from-red-50 to-red-100 rounded-lg flex-shrink-0 shadow-sm">
@@ -129,7 +129,7 @@ export function ModelSelector({
               )}
             </div>
             <div
-              className={`px-2 py-1 text-xs font-medium rounded-full border flex-shrink-0 ${getProviderBadgeColor(
+              className={`hidden sm:block px-2 py-1 text-xs font-medium rounded-full border flex-shrink-0 ${getProviderBadgeColor(
                 selectedModelData?.provider || ""
               )}`}
             >
