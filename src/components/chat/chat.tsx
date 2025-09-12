@@ -267,7 +267,7 @@ export function Chat() {
               disabled={isLoading || !selectedModel}
             />
 
-            <div className="flex justify-end mt-2">
+            <div className="flex justify-end">
               <Button
                 onClick={handleSendMessage}
                 disabled={!input.trim() || isLoading || !selectedModel}

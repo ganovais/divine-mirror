@@ -40,25 +40,23 @@ export function MessageBubble({ message }: MessageBubbleProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`group flex gap-3 ${isUser ? "justify-end" : "justify-start"} mb-4`}
+      className={`group flex gap-3 ${
+        isUser ? "justify-end" : "justify-start"
+      } mb-4`}
     >
-      {!isUser && (
-        <div className="flex-shrink-0">
-          <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center">
-            <Bot className="w-4 h-4 text-[#8e0000]" />
-          </div>
-        </div>
-      )}
-      
-      <div className={`flex flex-col ${isUser ? "items-end" : "items-start"} max-w-[80%] sm:max-w-[70%]`}>
+      <div
+        className={`flex flex-col ${
+          isUser ? "items-end" : "items-start"
+        } max-w-[80%] sm:max-w-[70%]`}
+      >
         <div
           className={`rounded-2xl ${
             isUser
               ? "px-4 py-3 bg-[#8e0000] text-white rounded-br-md shadow-sm"
-              : "px-4 py-3 bg-slate-50 text-slate-900 rounded-bl-md shadow-sm border"
+              : ""
           }`}
         >
-          <div className="leading-relaxed whitespace-pre-wrap text-sm">
+          <div className="leading-relaxed whitespace-pre-wrap">
             {message.content}
           </div>
         </div>
@@ -77,26 +75,18 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           {!isUser && (
             <button
               onClick={copyToClipboard}
-              className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-slate-100"
+              className="p-2 rounded hover:bg-slate-100"
               title="Copiar mensagem"
             >
               {copied ? (
-                <Check className="w-3 h-3 text-green-600" />
+                <Check className="size-5 text-green-600" />
               ) : (
-                <Copy className="w-3 h-3 text-slate-500" />
+                <Copy className="size-5 text-slate-500" />
               )}
             </button>
           )}
         </div>
       </div>
-
-      {isUser && (
-        <div className="flex-shrink-0">
-          <div className="w-8 h-8 rounded-full bg-[#8e0000] flex items-center justify-center">
-            <User className="w-4 h-4 text-white" />
-          </div>
-        </div>
-      )}
     </motion.div>
   );
 }
