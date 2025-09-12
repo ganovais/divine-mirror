@@ -54,14 +54,14 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex items-center gap-3 px-4 py-3 bg-red-50 border border-red-200 rounded-xl"
+        className="w-full sm:w-[300px] md:w-[340px] flex items-center gap-3 p-3 sm:p-4 min-h-[60px] bg-red-50 border-2 border-red-200 rounded-xl"
       >
-        <div className="p-2 bg-red-100 rounded-lg">
+        <div className="p-2 bg-red-100 rounded-lg flex-shrink-0">
           <Bot className="w-4 h-4 text-red-600" />
         </div>
-        <div>
-          <p className="text-sm font-medium text-red-800">Nenhum modelo disponível</p>
-          <p className="text-xs text-red-600">Verifique suas chaves de API</p>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm sm:text-base font-semibold text-red-800 leading-tight">Nenhum modelo disponível</p>
+          <p className="text-xs text-red-600 mt-1 leading-tight">Verifique suas chaves de API</p>
         </div>
       </motion.div>
     );
@@ -73,16 +73,16 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex items-center gap-3 px-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm"
+        className="w-full sm:w-[300px] md:w-[340px] flex items-center gap-3 p-3 sm:p-4 min-h-[60px] bg-white border-2 border-slate-300 rounded-xl shadow-lg"
       >
-        <div className="p-2 bg-red-50 rounded-lg">
+        <div className="p-2 bg-gradient-to-br from-red-50 to-red-100 rounded-lg flex-shrink-0 shadow-sm">
           {getModelIcon(model.provider)}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-slate-900 truncate">{model.name}</p>
-          <p className="text-xs text-slate-600 truncate">{model.description}</p>
+          <p className="text-sm sm:text-base font-semibold text-slate-900 truncate leading-tight">{model.name}</p>
+          <p className="text-xs text-slate-600 truncate mt-1 leading-tight">{model.description}</p>
         </div>
-        <div className={`px-2 py-1 text-xs font-medium rounded-full border ${getProviderBadgeColor(model.provider)}`}>
+        <div className={`px-2.5 py-1.5 text-xs font-semibold rounded-full border-2 flex-shrink-0 ${getProviderBadgeColor(model.provider)}`}>
           {model.provider === "openai" ? "OpenAI" : "Google"}
         </div>
       </motion.div>
@@ -96,7 +96,7 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
       className="w-full sm:w-auto"
     >
       <Select value={selectedModel} onValueChange={onModelChange}>
-        <SelectTrigger className="w-full sm:w-[280px] md:w-[320px] h-auto p-4 bg-white border-2 border-slate-300 rounded-xl shadow-lg hover:shadow-xl hover:border-[#8e0000]/40 transition-all duration-200 focus:ring-2 focus:ring-[#8e0000]/30 focus:border-[#8e0000]">
+        <SelectTrigger className="w-full sm:w-[300px] md:w-[340px] h-auto min-h-[60px] p-3 sm:p-4 bg-white border-2 border-slate-300 rounded-xl shadow-lg hover:shadow-xl hover:border-[#8e0000]/40 transition-all duration-200 focus:ring-2 focus:ring-[#8e0000]/30 focus:border-[#8e0000]">
           <div className="flex items-center gap-3 w-full">
             {selectedModelData && (
               <div className="p-2 bg-gradient-to-br from-red-50 to-red-100 rounded-lg flex-shrink-0 shadow-sm">
@@ -107,10 +107,10 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
               <SelectValue placeholder="Selecionar modelo">
                 {selectedModelData && (
                   <>
-                    <p className="font-semibold text-slate-900 truncate">
+                    <p className="font-semibold text-slate-900 text-sm sm:text-base truncate leading-tight">
                       {selectedModelData.name}
                     </p>
-                    <p className="text-xs text-slate-600 truncate mt-0.5">
+                    <p className="text-xs text-slate-600 truncate mt-1 leading-tight">
                       {selectedModelData.description}
                     </p>
                   </>
@@ -118,15 +118,15 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
               </SelectValue>
             </div>
             {selectedModelData && (
-              <div className={`px-3 py-1.5 text-xs font-semibold rounded-full border-2 flex-shrink-0 ${getProviderBadgeColor(selectedModelData.provider)}`}>
+              <div className={`px-2.5 py-1.5 text-xs font-semibold rounded-full border-2 flex-shrink-0 ${getProviderBadgeColor(selectedModelData.provider)}`}>
                 {selectedModelData.provider === "openai" ? "OpenAI" : "Google"}
               </div>
             )}
           </div>
         </SelectTrigger>
         
-        <SelectContent className="w-[280px] md:w-[320px] p-3 bg-white border-2 border-slate-300 rounded-xl shadow-2xl">
-          <div className="text-xs font-bold text-slate-700 uppercase tracking-wide px-3 py-2 mb-3 border-b border-slate-200">
+        <SelectContent className="w-[calc(100vw-2rem)] sm:w-[300px] md:w-[340px] max-w-[340px] p-2 sm:p-3 bg-white border-2 border-slate-300 rounded-xl shadow-2xl">
+          <div className="text-xs font-bold text-slate-700 uppercase tracking-wide px-3 py-2 mb-2 border-b border-slate-200">
             Modelos Disponíveis
           </div>
           
@@ -134,7 +134,7 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
             <SelectItem 
               key={model.id} 
               value={model.id}
-              className="p-4 rounded-lg cursor-pointer hover:bg-gradient-to-r hover:from-red-50 hover:to-red-100 focus:bg-gradient-to-r focus:from-red-50 focus:to-red-100 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-red-100 data-[state=checked]:to-red-200 border-2 border-transparent hover:border-red-300 focus:border-red-300 data-[state=checked]:border-red-400 transition-all duration-200 mb-2"
+              className="p-3 sm:p-4 rounded-lg cursor-pointer hover:bg-gradient-to-r hover:from-red-50 hover:to-red-100 focus:bg-gradient-to-r focus:from-red-50 focus:to-red-100 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-red-100 data-[state=checked]:to-red-200 border-2 border-transparent hover:border-red-300 focus:border-red-300 data-[state=checked]:border-red-400 transition-all duration-200 mb-2 min-h-[60px] touch-manipulation"
             >
               <div className="flex items-start gap-3 w-full">
                 <div className="p-2 bg-gradient-to-br from-red-50 to-red-100 rounded-lg flex-shrink-0 shadow-sm">
@@ -142,10 +142,10 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-slate-900 text-sm truncate">
+                  <div className="font-semibold text-slate-900 text-sm sm:text-base truncate leading-tight">
                     {model.name}
                   </div>
-                  <div className="text-xs text-slate-600 mt-0.5 line-clamp-2">
+                  <div className="text-xs text-slate-600 mt-1 line-clamp-2 leading-tight">
                     {model.description}
                   </div>
                   <div className={`inline-flex items-center gap-1 mt-2 px-2.5 py-1 rounded-full text-xs font-semibold border-2 ${getProviderBadgeColor(model.provider)}`}>
@@ -154,7 +154,7 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
                 </div>
                 
                 {selectedModel === model.id && (
-                  <div className="flex-shrink-0 w-3 h-3 bg-[#8e0000] rounded-full mt-3 shadow-sm" />
+                  <div className="flex-shrink-0 w-3 h-3 bg-[#8e0000] rounded-full mt-2 shadow-sm" />
                 )}
               </div>
             </SelectItem>
