@@ -46,14 +46,16 @@ export function MessageBubble({ message }: MessageBubbleProps) {
     >
       <div
         className={`flex flex-col ${
-          isUser ? "items-end" : "items-start"
-        } max-w-[85%] sm:max-w-[75%] md:max-w-[70%]`}
+          isUser
+            ? "items-end max-w-[85%] sm:max-w-[75%] md:max-w-[70%]"
+            : "items-start w-full"
+        } `}
       >
         <div
           className={`rounded-2xl ${
             isUser
               ? "px-4 py-3 bg-[#8e0000] text-white rounded-br-md shadow-sm"
-              : "px-4 py-3 bg-slate-50 text-slate-900 rounded-bl-md shadow-sm border border-slate-200"
+              : "" // : "px-4 py-3 bg-slate-50 text-slate-900 rounded-bl-md shadow-sm border border-slate-200"
           }`}
         >
           <div className="leading-relaxed whitespace-pre-wrap text-sm sm:text-base">
