@@ -1,23 +1,21 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { ArrowLeft, Bot, Loader2 } from "lucide-react";
-import Image from "next/image";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { Chat } from "@/components/chat";
 import { Button } from "@/components/ui/button";
 import { getAvailableModels, getDefaultModel } from "@/ai/get-model";
-import LogoSantaRita from "@/assets/logo-santa-rita.png";
 
 async function getModelsData() {
   try {
     const availableModels = getAvailableModels();
     let defaultModel = null;
-    
+
     try {
       defaultModel = getDefaultModel();
     } catch (error) {
       // No models available
     }
-    
+
     return { availableModels, defaultModel };
   } catch (error) {
     console.error("Error getting models:", error);
@@ -39,7 +37,7 @@ function ChatLoading() {
             style={{ background: "linear-gradient(90deg, #8e0000, #cd2323)" }}
           />
         </div>
-        
+
         <div className="container mx-auto max-w-4xl px-4 py-6 relative">
           <div className="flex items-center justify-between">
             <Link href="/">
@@ -52,18 +50,11 @@ function ChatLoading() {
               </Button>
             </Link>
 
-            <div className="flex items-center gap-4">
-              <Image
-                src={LogoSantaRita}
-                alt="Logo Santa Rita"
-                className="h-10 w-auto drop-shadow-[0_4px_12px_rgba(205,35,35,0.25)]"
-              />
-              <div className="text-center">
-                <h1 className="text-xl font-bold bg-gradient-to-r from-slate-900 via-[#8e0000] to-slate-900 bg-clip-text text-transparent">
-                  O Espelho Divino
-                </h1>
-                <p className="text-sm text-slate-600">Seu guia espiritual</p>
-              </div>
+            <div className="text-center">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-slate-900 via-[#8e0000] to-slate-900 bg-clip-text text-transparent">
+                O Espelho Divino
+              </h1>
+              <p className="text-sm text-slate-600">Seu guia espiritual</p>
             </div>
           </div>
         </div>
@@ -85,7 +76,7 @@ export default async function ChatPage() {
   return (
     <div className="flex flex-col h-screen">
       {/* Header with improved design */}
-      <div className="border-b border-slate-200/50 bg-gradient-to-r from-red-50 via-red-100 to-red-50 backdrop-blur-xl relative z-20">
+      <div className="border-b border-slate-200/50 bg-gradient-to-r from-red-50 via-red-200 to-red-50 backdrop-blur-xl relative z-20">
         <div
           aria-hidden
           className="absolute inset-x-0 top-0 flex justify-center pointer-events-none"
@@ -95,7 +86,7 @@ export default async function ChatPage() {
             style={{ background: "linear-gradient(90deg, #8e0000, #cd2323)" }}
           />
         </div>
-        
+
         <div className="container mx-auto max-w-4xl px-4 py-6 relative">
           <div className="flex items-center justify-between">
             <Link href="/">
@@ -108,18 +99,11 @@ export default async function ChatPage() {
               </Button>
             </Link>
 
-            <div className="flex items-center gap-4">
-              <Image
-                src={LogoSantaRita}
-                alt="Logo Santa Rita"
-                className="h-10 w-auto drop-shadow-[0_4px_12px_rgba(205,35,35,0.25)]"
-              />
-              <div className="text-center">
-                <h1 className="text-xl font-bold bg-gradient-to-r from-slate-900 via-[#8e0000] to-slate-900 bg-clip-text text-transparent">
-                  O Espelho Divino
-                </h1>
-                <p className="text-sm text-slate-600">Seu guia espiritual</p>
-              </div>
+            <div className="text-center">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-slate-900 via-[#8e0000] to-slate-900 bg-clip-text text-transparent">
+                O Espelho Divino
+              </h1>
+              <p className="text-sm text-slate-600">Seu guia espiritual</p>
             </div>
           </div>
         </div>
@@ -127,10 +111,7 @@ export default async function ChatPage() {
 
       <div className="flex-1 overflow-hidden">
         <Suspense fallback={<ChatLoading />}>
-          <Chat 
-            availableModels={availableModels} 
-            defaultModel={defaultModel}
-          />
+          <Chat availableModels={availableModels} defaultModel={defaultModel} />
         </Suspense>
       </div>
     </div>
