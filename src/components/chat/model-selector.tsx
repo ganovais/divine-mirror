@@ -1,8 +1,14 @@
 "use client";
 
-import { ChevronDown, Bot, Sparkles } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { Bot, Sparkles, ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Model {
   id: string;
@@ -19,8 +25,6 @@ interface ModelSelectorProps {
 }
 
 export function ModelSelector({ selectedModel, onModelChange, availableModels }: ModelSelectorProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
   const selectedModelData = availableModels.find(m => m.id === selectedModel);
 
   const getModelIcon = (provider: string) => {
@@ -34,112 +38,129 @@ export function ModelSelector({ selectedModel, onModelChange, availableModels }:
     }
   };
 
-  const getProviderColor = (provider: string) => {
+  const getProviderBadgeColor = (provider: string) => {
     switch (provider) {
       case "openai":
-        return "text-[#8e0000] bg-red-50 border-red-200";
+        return "bg-blue-100 text-blue-700 border-blue-200";
       case "google":
-        return "text-[#8e0000] bg-red-50 border-red-200";
+        return "bg-green-100 text-green-700 border-green-200";
       default:
-        return "text-[#8e0000] bg-red-50 border-red-200";
+        return "bg-gray-100 text-gray-700 border-gray-200";
     }
   };
 
   if (availableModels.length === 0) {
     return (
-      <div className="px-3 py-2 text-sm text-red-600 bg-red-50 rounded-lg border border-red-200">
-        Nenhum modelo disponível
-      </div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex items-center gap-3 px-4 py-3 bg-red-50 border border-red-200 rounded-xl"
+      >
+        <div className="p-2 bg-red-100 rounded-lg">
+          <Bot className="w-4 h-4 text-red-600" />
+        </div>
+        <div>
+          <p className="text-sm font-medium text-red-800">Nenhum modelo disponível</p>
+          <p className="text-xs text-red-600">Verifique suas chaves de API</p>
+        </div>
+      </motion.div>
     );
   }
 
   if (availableModels.length === 1) {
     const model = availableModels[0];
     return (
-      <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${getProviderColor(model.provider)}`}>
-        {getModelIcon(model.provider)}
-        <span className="text-sm font-medium">{model.name}</span>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex items-center gap-3 px-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm"
+      >
+        <div className="p-2 bg-red-50 rounded-lg">
+          {getModelIcon(model.provider)}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-medium text-slate-900 truncate">{model.name}</p>
+          <p className="text-xs text-slate-600 truncate">{model.description}</p>
+        </div>
+        <div className={`px-2 py-1 text-xs font-medium rounded-full border ${getProviderBadgeColor(model.provider)}`}>
+          {model.provider === "openai" ? "OpenAI" : "Google"}
+        </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="relative">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors hover:bg-slate-50 ${
-          selectedModelData ? getProviderColor(selectedModelData.provider) : "text-slate-600 bg-slate-50 border-slate-200"
-        }`}
-      >
-        {selectedModelData && getModelIcon(selectedModelData.provider)}
-        <span className="text-sm font-medium">
-          {selectedModelData?.name || "Selecionar modelo"}
-        </span>
-        <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
-      </button>
-
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop */}
-            <div
-              className="fixed inset-0 z-10"
-              onClick={() => setIsOpen(false)}
-            />
-            
-            {/* Dropdown */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="absolute right-0 top-full mt-2 w-64 bg-white border border-slate-200 rounded-lg shadow-lg z-20"
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="w-full sm:w-auto"
+    >
+      <Select value={selectedModel} onValueChange={onModelChange}>
+        <SelectTrigger className="w-full sm:w-[280px] md:w-[320px] h-auto p-4 bg-white border-2 border-slate-300 rounded-xl shadow-lg hover:shadow-xl hover:border-[#8e0000]/40 transition-all duration-200 focus:ring-2 focus:ring-[#8e0000]/30 focus:border-[#8e0000]">
+          <div className="flex items-center gap-3 w-full">
+            {selectedModelData && (
+              <div className="p-2 bg-gradient-to-br from-red-50 to-red-100 rounded-lg flex-shrink-0 shadow-sm">
+                {getModelIcon(selectedModelData.provider)}
+              </div>
+            )}
+            <div className="flex-1 text-left min-w-0">
+              <SelectValue placeholder="Selecionar modelo">
+                {selectedModelData && (
+                  <>
+                    <p className="font-semibold text-slate-900 truncate">
+                      {selectedModelData.name}
+                    </p>
+                    <p className="text-xs text-slate-600 truncate mt-0.5">
+                      {selectedModelData.description}
+                    </p>
+                  </>
+                )}
+              </SelectValue>
+            </div>
+            {selectedModelData && (
+              <div className={`px-3 py-1.5 text-xs font-semibold rounded-full border-2 flex-shrink-0 ${getProviderBadgeColor(selectedModelData.provider)}`}>
+                {selectedModelData.provider === "openai" ? "OpenAI" : "Google"}
+              </div>
+            )}
+          </div>
+        </SelectTrigger>
+        
+        <SelectContent className="w-[280px] md:w-[320px] p-3 bg-white border-2 border-slate-300 rounded-xl shadow-2xl">
+          <div className="text-xs font-bold text-slate-700 uppercase tracking-wide px-3 py-2 mb-3 border-b border-slate-200">
+            Modelos Disponíveis
+          </div>
+          
+          {availableModels.map((model) => (
+            <SelectItem 
+              key={model.id} 
+              value={model.id}
+              className="p-4 rounded-lg cursor-pointer hover:bg-gradient-to-r hover:from-red-50 hover:to-red-100 focus:bg-gradient-to-r focus:from-red-50 focus:to-red-100 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-red-100 data-[state=checked]:to-red-200 border-2 border-transparent hover:border-red-300 focus:border-red-300 data-[state=checked]:border-red-400 transition-all duration-200 mb-2"
             >
-              <div className="p-2">
-                <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide px-2 py-1 mb-1">
-                  Modelos Disponíveis
+              <div className="flex items-start gap-3 w-full">
+                <div className="p-2 bg-gradient-to-br from-red-50 to-red-100 rounded-lg flex-shrink-0 shadow-sm">
+                  {getModelIcon(model.provider)}
                 </div>
                 
-                {availableModels.map((model) => (
-                  <button
-                    key={model.id}
-                    onClick={() => {
-                      onModelChange(model.id);
-                      setIsOpen(false);
-                    }}
-                    className={`w-full flex items-start gap-3 p-3 rounded-lg transition-colors hover:bg-red-50 ${
-                      selectedModel === model.id ? "bg-red-50 border border-red-200" : ""
-                    }`}
-                  >
-                    <div className="flex-shrink-0 mt-0.5">
-                      {getModelIcon(model.provider)}
-                    </div>
-                    
-                    <div className="flex-1 text-left">
-                      <div className="font-medium text-slate-900 text-sm">
-                        {model.name}
-                      </div>
-                      <div className="text-xs text-slate-600 mt-0.5">
-                        {model.description}
-                      </div>
-                      <div className={`inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-medium ${
-                        model.provider === "openai" 
-                          ? "bg-red-100 text-[#8e0000]" 
-                          : "bg-red-100 text-[#8e0000]"
-                      }`}>
-                        {model.provider === "openai" ? "OpenAI" : "Google"}
-                      </div>
-                    </div>
-                    
-                    {selectedModel === model.id && (
-                      <div className="flex-shrink-0 w-2 h-2 bg-[#8e0000] rounded-full mt-2" />
-                    )}
-                  </button>
-                ))}
+                <div className="flex-1 min-w-0">
+                  <div className="font-semibold text-slate-900 text-sm truncate">
+                    {model.name}
+                  </div>
+                  <div className="text-xs text-slate-600 mt-0.5 line-clamp-2">
+                    {model.description}
+                  </div>
+                  <div className={`inline-flex items-center gap-1 mt-2 px-2.5 py-1 rounded-full text-xs font-semibold border-2 ${getProviderBadgeColor(model.provider)}`}>
+                    {model.provider === "openai" ? "OpenAI" : "Google"}
+                  </div>
+                </div>
+                
+                {selectedModel === model.id && (
+                  <div className="flex-shrink-0 w-3 h-3 bg-[#8e0000] rounded-full mt-3 shadow-sm" />
+                )}
               </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </div>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </motion.div>
   );
 }

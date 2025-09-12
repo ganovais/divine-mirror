@@ -1,14 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
-interface Model {
-  id: string;
-  name: string;
-  provider: string;
-  description: string;
-  isAvailable: boolean;
-}
+import { useState } from "react";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -17,27 +9,6 @@ interface ChatMessage {
 
 export function useChat() {
   const [isLoading, setIsLoading] = useState(false);
-  const [availableModels, setAvailableModels] = useState<Model[]>([]);
-
-  // Fetch available models on mount
-  useEffect(() => {
-    fetchAvailableModels();
-  }, []);
-
-  const fetchAvailableModels = async () => {
-    try {
-      const response = await fetch("/api/models");
-      if (!response.ok) {
-        throw new Error("Failed to fetch models");
-      }
-      
-      const data = await response.json();
-      setAvailableModels(data.models || []);
-    } catch (error) {
-      console.error("Error fetching models:", error);
-      setAvailableModels([]);
-    }
-  };
 
   const sendMessage = async (messages: ChatMessage[], modelName: string): Promise<string> => {
     setIsLoading(true);
@@ -105,7 +76,5 @@ export function useChat() {
   return {
     sendMessage,
     isLoading,
-    availableModels,
-    refetchModels: fetchAvailableModels,
   };
 }

@@ -12,12 +12,14 @@ import {
   BookOpen,
   ArrowUp,
 } from "lucide-react";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ModelSelector } from "./model-selector";
 import { MessageBubble } from "./message-bubble";
 import { useChat } from "./use-chat";
+import LogoSantaRita from "@/assets/logo-santa-rita.png";
 
 interface Message {
   id: string;
@@ -26,10 +28,23 @@ interface Message {
   timestamp: Date;
 }
 
-export function Chat() {
+interface ChatProps {
+  availableModels: Array<{
+    id: string;
+    name: string;
+    provider: string;
+    description: string;
+    isAvailable: boolean;
+  }>;
+  defaultModel: string | null;
+}
+
+export function Chat({ availableModels, defaultModel }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [selectedModel, setSelectedModel] = useState<string>("");
+  const [selectedModel, setSelectedModel] = useState<string>(
+    defaultModel || ""
+  );
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -41,14 +56,14 @@ export function Chat() {
     }
   }, [input]);
 
-  const { sendMessage, isLoading, availableModels } = useChat();
+  const { sendMessage, isLoading } = useChat();
 
-  // Set default model when available models load
+  // Set default model when available models are provided
   useEffect(() => {
-    if (availableModels.length > 0 && !selectedModel) {
-      setSelectedModel(availableModels[0].id);
+    if (availableModels.length > 0 && !selectedModel && defaultModel) {
+      setSelectedModel(defaultModel);
     }
-  }, [availableModels, selectedModel]);
+  }, [availableModels, selectedModel, defaultModel]);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -148,7 +163,7 @@ export function Chat() {
       {/* Header */}
       <div className="bg-white border-b border-slate-200 relative z-10">
         <div className="container mx-auto max-w-4xl px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-center sm:justify-between gap-3">
             <ModelSelector
               selectedModel={selectedModel}
               onModelChange={setSelectedModel}
@@ -173,21 +188,25 @@ export function Chat() {
         <div className="container mx-auto max-w-4xl">
           <AnimatePresence>
             {messages.length === 0 ? (
-              <div className="min-h-[calc(100vh-200px)] flex flex-col items-center justify-center px-4 py-8 sm:px-6 sm:py-12">
+              <div className="flex flex-col items-center px-4 py-8 sm:px-6 sm:py-12">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center mb-8"
                 >
-                  <div className="p-4 rounded-full bg-red-50 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                    <Bot className="w-8 h-8 text-[#8e0000]" />
+                  <div className="p-4 rounded-full bg-red-800 size-24 mx-auto mb-4 flex items-center justify-center">
+                    <Image
+                      src={LogoSantaRita}
+                      alt="Logo Santa Rita"
+                      className="w-full"
+                    />
                   </div>
                   <h3 className="text-xl font-semibold text-slate-900 mb-2">
                     Bem-vindo ao Espelho Divino
                   </h3>
                   <p className="text-slate-600 max-w-md mx-auto text-sm leading-relaxed mb-8">
-                    Faça perguntas sobre fé, espiritualidade, versículos bíblicos,
-                    orações e temas relacionados à evangelização.
+                    Faça perguntas sobre fé, espiritualidade, versículos
+                    bíblicos, orações e temas relacionados à evangelização.
                   </p>
                 </motion.div>
 
@@ -280,14 +299,17 @@ export function Chat() {
                 className="h-9 w-9 sm:h-10 sm:w-10 bg-[#8e0000] hover:bg-[#a50000] text-white rounded-full transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 {isLoading ? (
-                  <Loader2 strokeWidth={1.5} className="size-4 sm:size-5 animate-spin" />
+                  <Loader2
+                    strokeWidth={1.5}
+                    className="size-4 sm:size-5 animate-spin"
+                  />
                 ) : (
                   <ArrowUp strokeWidth={2.5} className="size-4 sm:size-5" />
                 )}
               </Button>
             </div>
           </div>
-          
+
           {!selectedModel && availableModels.length === 0 && (
             <p className="text-xs sm:text-sm text-[#8e0000] mt-3 text-center">
               Nenhum modelo de IA está disponível. Verifique suas chaves de API.
