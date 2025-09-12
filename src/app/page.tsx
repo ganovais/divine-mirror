@@ -20,48 +20,92 @@ import LogoSantaRita from "@/assets/logo-santa-rita.png";
 export default function Home() {
   return (
     <>
-      {/* Animated gradient background layer */}
-      <div className="min-h-dvh mx-auto max-w-5xl px-4 sm:px-6 py-10 md:py-16">
+      {/* Enhanced animated gradient background layers */}
+      <div className="min-h-dvh mx-auto max-w-5xl px-4 sm:px-6 py-10 md:py-16 relative">
+        {/* Primary background gradient */}
         <div
           aria-hidden
-          className="fixed inset-0 -z-10 animate-gradient-slow"
+          className="fixed inset-0 -z-20 animate-gradient-slow"
         />
+        
+        {/* Multiple layered blur effects */}
         <div
           aria-hidden
           className="absolute inset-x-0 top-0 flex justify-center pointer-events-none"
         >
+          {/* Main blur */}
           <div
-            className="h-32 sm:h-48 w-[28rem] sm:w-[36rem] blur-3xl opacity-90"
-            style={{ background: "linear-gradient(90deg, #8e0000, #cd2323)" }}
+            className="h-40 sm:h-56 w-[32rem] sm:w-[40rem] blur-3xl opacity-60"
+            style={{ background: "linear-gradient(90deg, #8e0000, #cd2323, #8e0000)" }}
           />
+        </div>
+        
+        {/* Secondary blur layers for depth */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-20 flex justify-center pointer-events-none"
+        >
+          <div
+            className="h-24 sm:h-32 w-[20rem] sm:w-[24rem] blur-2xl opacity-30"
+            style={{ background: "radial-gradient(circle, #cd2323, transparent)" }}
+          />
+        </div>
+        
+        {/* Subtle animated particles */}
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none overflow-hidden"
+        >
+          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-[#8e0000]/20 rounded-full animate-pulse"></div>
+          <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-[#cd2323]/30 rounded-full animate-ping"></div>
+          <div className="absolute top-1/2 right-1/4 w-1.5 h-1.5 bg-[#8e0000]/15 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
         </div>
 
         <motion.div
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center"
+          className="text-center mb-8"
         >
-          {/* Logo */}
-          <Image
-            src={LogoSantaRita}
-            alt="Logo Santa Rita"
-            priority
-            className="mx-auto h-16 w-auto sm:h-20 drop-shadow-[0_8px_18px_rgba(205,35,35,0.25)]"
-          />
+          {/* Enhanced Header with Logo and Title */}
+          <div className="flex flex-col items-center gap-6">
+            <Image
+              src={LogoSantaRita}
+              alt="Logo Santa Rita"
+              priority
+              className="h-20 w-auto sm:h-24 drop-shadow-[0_12px_24px_rgba(205,35,35,0.35)] hover:drop-shadow-[0_16px_32px_rgba(205,35,35,0.45)] transition-all duration-300"
+            />
+            
+            <div className="relative">
+              {/* Glow effect behind text */}
+              <div
+                className="absolute inset-0 blur-2xl opacity-20"
+                style={{ background: "linear-gradient(90deg, #8e0000, #cd2323, #8e0000)" }}
+              />
+              
+              <h1 className="relative text-4xl md:text-6xl font-bold tracking-tight">
+                <span className="bg-gradient-to-r from-slate-900 via-[#8e0000] to-slate-900 bg-clip-text text-transparent drop-shadow-sm">
+                  O Espelho Divino
+                </span>
+              </h1>
+              
+              <div className="flex items-center justify-center gap-2 mt-3">
+                <div className="h-px bg-gradient-to-r from-transparent via-[#8e0000]/30 to-transparent flex-1 max-w-16"></div>
+                <div className="w-2 h-2 bg-[#8e0000] rounded-full opacity-60"></div>
+                <div className="h-px bg-gradient-to-r from-transparent via-[#8e0000]/30 to-transparent flex-1 max-w-16"></div>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         <main className="relative">
           <motion.div
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
             className="text-center mb-8 md:mb-12"
           >
-            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-slate-900">
-              O Espelho Divino
-            </h1>
-            <p className="mt-3 text-slate-600 max-w-2xl mx-auto text-balance px-2">
+            <p className="mt-6 text-slate-600 max-w-2xl mx-auto text-balance px-2 text-lg leading-relaxed">
               Explore estações temáticas e descubra versículos que falam ao seu
               momento. Clique em uma estação para refletir ou converse diretamente com o Espelho Divino.
             </p>

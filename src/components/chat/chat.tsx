@@ -26,10 +26,21 @@ interface Message {
   timestamp: Date;
 }
 
-export function Chat() {
+interface ChatProps {
+  availableModels: Array<{
+    id: string;
+    name: string;
+    provider: string;
+    description: string;
+    isAvailable: boolean;
+  }>;
+  defaultModel: string | null;
+}
+
+export function Chat({ availableModels, defaultModel }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [selectedModel, setSelectedModel] = useState<string>("");
+  const [selectedModel, setSelectedModel] = useState<string>(defaultModel || "");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -41,14 +52,14 @@ export function Chat() {
     }
   }, [input]);
 
-  const { sendMessage, isLoading, availableModels } = useChat();
+  const { sendMessage, isLoading } = useChat();
 
-  // Set default model when available models load
+  // Set default model when available models are provided
   useEffect(() => {
-    if (availableModels.length > 0 && !selectedModel) {
-      setSelectedModel(availableModels[0].id);
+    if (availableModels.length > 0 && !selectedModel && defaultModel) {
+      setSelectedModel(defaultModel);
     }
-  }, [availableModels, selectedModel]);
+  }, [availableModels, selectedModel, defaultModel]);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
