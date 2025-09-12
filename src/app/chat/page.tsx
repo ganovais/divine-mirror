@@ -29,13 +29,13 @@ function ChatLoading() {
   return (
     <div className="flex flex-col h-screen">
       {/* Header with improved design */}
-      <div className="border-b border-slate-200/50 bg-white/80 backdrop-blur-xl relative z-20">
+      <div className="border-b border-slate-200/50 bg-gradient-to-r from-red-50 via-red-100 to-red-50 backdrop-blur-xl relative z-20">
         <div
           aria-hidden
           className="absolute inset-x-0 top-0 flex justify-center pointer-events-none"
         >
           <div
-            className="h-16 w-[28rem] sm:w-[36rem] blur-3xl opacity-30"
+            className="h-16 w-[28rem] sm:w-[36rem] blur-3xl opacity-60"
             style={{ background: "linear-gradient(90deg, #8e0000, #cd2323)" }}
           />
         </div>
@@ -85,13 +85,13 @@ export default async function ChatPage() {
   return (
     <div className="flex flex-col h-screen">
       {/* Header with improved design */}
-      <div className="border-b border-slate-200/50 bg-white/80 backdrop-blur-xl relative z-20">
+      <div className="border-b border-slate-200/50 bg-gradient-to-r from-red-50 via-red-100 to-red-50 backdrop-blur-xl relative z-20">
         <div
           aria-hidden
           className="absolute inset-x-0 top-0 flex justify-center pointer-events-none"
         >
           <div
-            className="h-16 w-[28rem] sm:w-[36rem] blur-3xl opacity-30"
+            className="h-16 w-[28rem] sm:w-[36rem] blur-3xl opacity-60"
             style={{ background: "linear-gradient(90deg, #8e0000, #cd2323)" }}
           />
         </div>
