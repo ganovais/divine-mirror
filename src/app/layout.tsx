@@ -1,6 +1,16 @@
-"use client";
-
 import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: 'Espelho Divino',
+  description: 'Converse com uma IA que reflete seus pensamentos e sentimentos.',
+  authors: [
+    {
+      name: 'Gabriel Novais',
+      url: 'https://github.com/ganovais',
+    },
+  ],
+}
 
 import "../styles/globals.css";
 
@@ -14,7 +24,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
