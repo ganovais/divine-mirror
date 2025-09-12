@@ -159,9 +159,9 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
   };
 
   return (
-    <div className="relative flex flex-col h-full w-full">
-      {/* Header */}
-      <div className="bg-white border-b border-slate-200 relative z-10">
+    <div className="relative w-full min-h-full">
+      {/* Header - Sticky */}
+      <div className="sticky top-0 bg-white border-b border-slate-200 z-20 backdrop-blur-sm bg-white/95">
         <div className="container mx-auto max-w-4xl px-4 py-4">
           <div className="flex flex-wrap items-center justify-center sm:justify-between gap-3">
             <ModelSelector
@@ -183,8 +183,8 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
         </div>
       </div>
 
-      {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto pb-36 sm:pb-40">
+      {/* Messages Container - Natural scroll */}
+      <div className="pb-36 sm:pb-40">
         <div className="container mx-auto max-w-4xl">
           <AnimatePresence>
             {messages.length === 0 ? (
@@ -279,7 +279,7 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
       </div>
 
       {/* Fixed Input Area */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white to-transparent pt-6 pb-4 sm:pb-6 z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white to-transparent pt-6 pb-4 sm:pb-6 z-30">
         <div className="container mx-auto max-w-4xl px-4">
           <div className="bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-lg backdrop-blur-sm">
             <textarea

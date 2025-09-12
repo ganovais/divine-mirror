@@ -28,7 +28,7 @@ async function getModelsData() {
 
 function ChatLoading() {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="min-h-screen flex flex-col">
       {/* Header with improved design */}
       <div className="border-b border-slate-200/50 bg-gradient-to-r from-red-50 via-red-100 to-red-50 backdrop-blur-xl relative z-20">
         <div
@@ -63,7 +63,7 @@ function ChatLoading() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-hidden flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center py-12">
         <div className="flex items-center gap-3 text-slate-600">
           <Loader2 className="w-6 h-6 animate-spin text-[#8e0000]" />
           <span className="text-lg">Carregando o Espelho Divino...</span>
@@ -77,7 +77,7 @@ export default async function ChatPage() {
   const { availableModels, defaultModel } = await getModelsData();
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="min-h-screen flex flex-col">
       {/* Header with improved design */}
       <div className="border-b border-slate-200/50 bg-gradient-to-r from-red-50 via-red-50 to-red-50 backdrop-blur-xl relative z-20">
         <div
@@ -112,7 +112,7 @@ export default async function ChatPage() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1">
         <Suspense fallback={<ChatLoading />}>
           <Chat availableModels={availableModels} defaultModel={defaultModel} />
         </Suspense>
