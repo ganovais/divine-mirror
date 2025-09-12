@@ -1,10 +1,7 @@
 "use client";
 
 import { Geist, Geist_Mono } from "next/font/google";
-import { motion } from "framer-motion";
-import Image from "next/image";
 
-import LogoSantaRita from "@/assets/logo-santa-rita.png";
 import "../styles/globals.css";
 
 const geistSans = Geist({

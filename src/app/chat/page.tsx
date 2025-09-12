@@ -1,6 +1,9 @@
+"use server"
+
 import Link from "next/link";
 import { Suspense } from "react";
 import { ArrowLeft, Loader2 } from "lucide-react";
+
 import { Chat } from "@/components/chat";
 import { Button } from "@/components/ui/button";
 import { getAvailableModels, getDefaultModel } from "@/ai/get-model";

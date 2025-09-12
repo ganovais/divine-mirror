@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { use, useMemo } from "react";
 import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
+
 import { getStationById } from "@/lib/data";
 import {
   Accordion,
@@ -10,7 +12,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ id: string }>;

@@ -204,7 +204,7 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
                   <h3 className="text-xl font-semibold text-slate-900 mb-2">
                     Bem-vindo ao Espelho Divino
                   </h3>
-                  <p className="text-slate-600 max-w-md mx-auto text-sm leading-relaxed mb-8">
+                  <p className="text-slate-600 max-w-md mx-auto text-sm leading-relaxed mb-5">
                     Faça perguntas sobre fé, espiritualidade, versículos
                     bíblicos, orações e temas relacionados à evangelização.
                   </p>

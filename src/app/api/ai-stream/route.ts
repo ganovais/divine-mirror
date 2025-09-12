@@ -2,7 +2,6 @@ import { type NextRequest } from "next/server";
 import { streamText } from "ai";
 
 import { getModel, getDefaultModel } from "@/ai/get-model";
-import { aiConfig } from "@/ai/config";
 
 // Divine Mirror system prompt based on AI helper.md
 const DIVINE_MIRROR_SYSTEM_PROMPT = `
