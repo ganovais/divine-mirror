@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -11,15 +12,15 @@ import {
   Heart,
   BookOpen,
   ArrowUp,
+  Shield,
 } from "lucide-react";
-import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ModelSelector } from "./model-selector";
 import { MessageBubble } from "./message-bubble";
 import { useChat } from "./use-chat";
-import LogoSantaRita from "@/assets/logo-santa-rita.png";
+import { Logo } from "../ui/logo";
 
 interface Message {
   id: string;
@@ -129,15 +130,14 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
       const errorMessage: Message = {
         id: assistantMessageId,
         role: "assistant",
-        content: "Desculpe, ocorreu um erro ao processar sua mensagem. Por favor, tente novamente.",
+        content:
+          "Desculpe, ocorreu um erro ao processar sua mensagem. Por favor, tente novamente.",
         timestamp: new Date(),
         isStreaming: false,
       };
 
       setMessages((prev) =>
-        prev.map((msg) =>
-          msg.id === assistantMessageId ? errorMessage : msg
-        )
+        prev.map((msg) => (msg.id === assistantMessageId ? errorMessage : msg))
       );
     }
   };
@@ -164,7 +164,8 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
       icon: <BookOpen className="w-5 h-5 text-[#8e0000]" />,
       title: "Versículos Bíblicos",
       description: "Compartilhe um versículo sobre esperança",
-      prompt: "Compartilhe um versículo bíblico sobre esperança e explique seu significado",
+      prompt:
+        "Compartilhe um versículo bíblico sobre esperança e explique seu significado",
     },
     {
       icon: <Lightbulb className="w-5 h-5 text-[#8e0000]" />,
@@ -195,15 +196,17 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
               onModelChange={setSelectedModel}
               availableModels={availableModels}
             />
-            {messages.length !== 0 && <Button
-              variant="outline"
-              size="sm"
-              onClick={clearChat}
-              className="flex items-center gap-2 border-[#8e0000] text-[#8e0000] hover:bg-[#8e0000] hover:text-white transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-              Novo chat
-            </Button>}
+            {messages.length !== 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={clearChat}
+                className="flex items-center gap-2 border-[#8e0000] text-[#8e0000] hover:bg-[#8e0000] hover:text-white transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                Novo chat
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -219,13 +222,7 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center mb-8"
                 >
-                  <div className="p-4 rounded-full bg-red-800 size-24 mx-auto mb-4 flex items-center justify-center">
-                    <Image
-                      src={LogoSantaRita}
-                      alt="Logo Santa Rita"
-                      className="w-full"
-                    />
-                  </div>
+                  <Logo />
                   <h3 className="text-xl font-semibold text-slate-900 mb-2">
                     Bem-vindo ao Espelho Divino
                   </h3>
@@ -279,7 +276,6 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
                   <MessageBubble key={message.id} message={message} />
                 ))}
 
-
                 <div ref={messagesEndRef} />
               </div>
             )}
@@ -301,7 +297,11 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
               disabled={isLoading || !selectedModel}
             />
 
-            <div className="flex justify-end mt-2">
+            <div className="flex justify-between mt-2">
+              <Link href="/privacy" className="flex items-center justify-center gap-2 text-xs hover:underline">
+                <Shield className="size-4 text-[#8e0000]" /> Política de Privacidade
+              </Link>
+
               <Button
                 onClick={handleSendMessage}
                 disabled={!input.trim() || isLoading || !selectedModel}
@@ -318,7 +318,6 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
               </Button>
             </div>
           </div>
-
           {!selectedModel && availableModels.length === 0 && (
             <p className="text-xs sm:text-sm text-[#8e0000] mt-3 text-center">
               Nenhum modelo de IA está disponível. Verifique suas chaves de API.
