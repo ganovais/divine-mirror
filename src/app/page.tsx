@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { createElement, type ComponentType } from "react";
 import * as Icons from "lucide-react";
-import { MessageCircle, Sparkles } from "lucide-react";
+import { MessageCircle, Sparkles, BadgeInfo } from "lucide-react";
 
 import {
   Card,
@@ -115,8 +115,15 @@ export default function Home() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-              className="mt-6"
+              className="mt-6 flex gap-3 flex-wrap justify-center"
             >
+               <Link href="https://youtu.be/t2XpVTvjjMg" target="_blank">
+                <Button variant={"outline"} className="px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 group">
+                  <BadgeInfo className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                  Como usar
+                </Button>
+              </Link>
+
               <Link href="/chat">
                 <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 group">
                   <MessageCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
