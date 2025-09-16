@@ -69,8 +69,8 @@ async function storeMessage({
 }: Message) {
   const client = await pool.connect();
   try {
-    await client.query('CREATE TABLE IF NOT EXISTS messages (id SERIAL PRIMARY KEY, message TEXT, modelName TEXT)');
-     await client.query('INSERT INTO messages (message, modelName) VALUES ($1, $2)', [message, modelName]);
+    await client.query('CREATE TABLE IF NOT EXISTS messages (id SERIAL PRIMARY KEY, message TEXT, modelName TEXT, createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP)');
+     await client.query('INSERT INTO messages (message, modelName, createdAt) VALUES ($1, $2, $3)', [message, modelName, new Date()]);
   } finally {
     client.release();
   }
