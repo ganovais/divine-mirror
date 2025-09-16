@@ -10,7 +10,11 @@ interface ChatMessage {
 export function useChat() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const sendMessage = async (messages: ChatMessage[], modelName: string): Promise<string> => {
+  const sendMessage = async (
+    messages: ChatMessage[], 
+    modelName: string, 
+    onStreamUpdate?: (text: string) => void
+  ): Promise<string> => {
     setIsLoading(true);
 
     try {
@@ -47,6 +51,11 @@ export function useChat() {
 
           const chunk = decoder.decode(value, { stream: true });
           fullResponse += chunk;
+          
+          // Call the callback with the current accumulated text for streaming display
+          if (onStreamUpdate) {
+            onStreamUpdate(fullResponse);
+          }
         }
       } finally {
         reader.releaseLock();

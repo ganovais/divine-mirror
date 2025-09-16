@@ -26,6 +26,7 @@ interface Message {
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
+  isStreaming?: boolean;
 }
 
 interface ChatProps {
@@ -83,35 +84,61 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
+    // Create a streaming assistant message
+    const assistantMessageId = (Date.now() + 1).toString();
+    const streamingMessage: Message = {
+      id: assistantMessageId,
+      role: "assistant",
+      content: "",
+      timestamp: new Date(),
+      isStreaming: true,
+    };
+
+    setMessages((prev) => [...prev, streamingMessage]);
+
     try {
       const response = await sendMessage(
         [...messages, userMessage].map((m) => ({
           role: m.role,
           content: m.content,
         })),
-        selectedModel
+        selectedModel,
+        // Stream update callback
+        (streamedText) => {
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.id === assistantMessageId
+                ? { ...msg, content: streamedText, isStreaming: true }
+                : msg
+            )
+          );
+        }
       );
 
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: response,
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
+      // Final update to mark streaming as complete
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === assistantMessageId
+            ? { ...msg, content: response, isStreaming: false }
+            : msg
+        )
+      );
     } catch (error) {
       console.error("Failed to send message:", error);
 
       const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
+        id: assistantMessageId,
         role: "assistant",
-        content:
-          "Desculpe, ocorreu um erro ao processar sua mensagem. Por favor, tente novamente.",
+        content: "Desculpe, ocorreu um erro ao processar sua mensagem. Por favor, tente novamente.",
         timestamp: new Date(),
+        isStreaming: false,
       };
 
-      setMessages((prev) => [...prev, errorMessage]);
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === assistantMessageId ? errorMessage : msg
+        )
+      );
     }
   };
 
@@ -137,8 +164,7 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
       icon: <BookOpen className="w-5 h-5 text-[#8e0000]" />,
       title: "Versículos Bíblicos",
       description: "Compartilhe um versículo sobre esperança",
-      prompt:
-        "Compartilhe um versículo bíblico sobre esperança e explique seu significado",
+      prompt: "Compartilhe um versículo bíblico sobre esperança e explique seu significado",
     },
     {
       icon: <Lightbulb className="w-5 h-5 text-[#8e0000]" />,
@@ -253,22 +279,6 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
                   <MessageBubble key={message.id} message={message} />
                 ))}
 
-                {/* Loading indicator */}
-                {isLoading && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2 text-slate-600 mb-4"
-                  >
-                    <div className="p-2 rounded-full bg-red-50">
-                      <Bot className="w-4 h-4 text-[#8e0000]" />
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Loader2 className="w-4 h-4 animate-spin text-[#8e0000]" />
-                      <span className="text-sm">Refletindo...</span>
-                    </div>
-                  </motion.div>
-                )}
 
                 <div ref={messagesEndRef} />
               </div>
