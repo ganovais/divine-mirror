@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { createElement, type ComponentType } from "react";
 import * as Icons from "lucide-react";
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { stations } from "@/lib/data";
-import LogoSantaRita from "@/assets/logo-santa-rita.png";
+import { Logo } from "@/components/ui/logo";
 
 export default function Home() {
   return (
@@ -69,13 +68,7 @@ export default function Home() {
         >
           {/* Enhanced Header with Logo and Title */}
           <div className="flex flex-col items-center gap-6">
-            <Image
-              src={LogoSantaRita}
-              alt="Logo Santa Rita"
-              priority
-              className="h-20 w-auto sm:h-24 drop-shadow-[0_12px_24px_rgba(205,35,35,0.35)] hover:drop-shadow-[0_16px_32px_rgba(205,35,35,0.45)] transition-all duration-300"
-            />
-            
+            <Logo />
             <div className="relative">
               {/* Glow effect behind text */}
               <div
@@ -83,7 +76,7 @@ export default function Home() {
                 style={{ background: "linear-gradient(90deg, #8e0000, #cd2323, #8e0000)" }}
               />
               
-              <h1 className="relative text-4xl md:text-6xl font-bold tracking-tight">
+              <h1 className="mt-12 sm:mt-20 relative text-4xl md:text-6xl font-bold tracking-tight">
                 <span className="bg-gradient-to-r from-slate-900 via-[#8e0000] to-slate-900 bg-clip-text text-transparent drop-shadow-sm">
                   O Espelho Divino
                 </span>

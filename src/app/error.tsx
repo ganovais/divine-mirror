@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Home, RefreshCw, MessageCircle, AlertTriangle } from "lucide-react";
 import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import LogoSantaRita from "@/assets/logo-santa-rita.png";
+import { Logo } from "@/components/ui/logo";
 
 export default function Error({
   error,
@@ -73,12 +72,7 @@ export default function Error({
             className="mb-8"
           >
             {/* Logo */}
-            <Image
-              src={LogoSantaRita}
-              alt="Logo Santa Rita"
-              priority
-              className="h-16 w-auto sm:h-20 mx-auto mb-6 drop-shadow-[0_12px_24px_rgba(205,35,35,0.35)] hover:drop-shadow-[0_16px_32px_rgba(205,35,35,0.45)] transition-all duration-300"
-            />
+            <Logo />
             
             <div className="relative">
               {/* Glow effect behind text */}
