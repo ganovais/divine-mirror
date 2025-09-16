@@ -1,8 +1,9 @@
 import { type NextRequest } from "next/server";
-import { streamText } from "ai";
+import { streamText, stepCountIs } from "ai";
 import { Pool } from "pg";
 
 import { getModel, getDefaultModel } from "@/ai/get-model";
+import { tools } from "@/ai/tools";
 
 type Message = {
   id?: string;
@@ -74,6 +75,7 @@ async function storeMessage({
     client.release();
   }
 }
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -111,8 +113,10 @@ export async function POST(req: NextRequest) {
     // Stream the AI response with improved settings
     const result = streamText({
       model,
+      tools,
       system: DIVINE_MIRROR_SYSTEM_PROMPT,
-      messages
+      messages,
+      stopWhen: stepCountIs(5),
     });
 
     await storeMessage({ message: messages[messages.length - 1].content, modelName });
