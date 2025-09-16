@@ -34,7 +34,7 @@ export default function Home() {
         >
           {/* Main blur */}
           <div
-            className="h-40 sm:h-56 w-[32rem] sm:w-[40rem] blur-3xl opacity-60"
+            className="h-40 sm:h-56 w-[32rem] sm:w-[40rem] blur-3xl opacity-30"
             style={{ background: "linear-gradient(90deg, #8e0000, #cd2323, #8e0000)" }}
           />
         </div>
@@ -76,7 +76,7 @@ export default function Home() {
                 style={{ background: "linear-gradient(90deg, #8e0000, #cd2323, #8e0000)" }}
               />
               
-              <h1 className="mt-12 sm:mt-20 relative text-4xl md:text-6xl font-bold tracking-tight">
+              <h1 className="relative text-4xl md:text-6xl font-bold tracking-tight">
                 <span className="bg-gradient-to-r from-slate-900 via-[#8e0000] to-slate-900 bg-clip-text text-transparent drop-shadow-sm">
                   O Espelho Divino
                 </span>

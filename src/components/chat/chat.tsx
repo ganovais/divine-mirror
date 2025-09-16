@@ -222,7 +222,7 @@ export function Chat({ availableModels, defaultModel }: ChatProps) {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center mb-8"
                 >
-                  <Logo />
+                  <Logo className="sm:h-28" />
                   <h3 className="text-xl font-semibold text-slate-900 mb-2">
                     Bem-vindo ao Espelho Divino
                   </h3>
